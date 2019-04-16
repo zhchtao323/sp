@@ -1,0 +1,46 @@
+using System;
+using System.Collections.Generic;
+using System.Collections;
+using System.Text;
+using System.IO;
+using System.Data.SQLite;
+using System.Data;
+using System.Reflection;
+using System.Timers;
+using System.Data.OleDb;
+using System.Xml;
+
+namespace ZCT.Data.SqlBuilder
+{    
+   
+    public enum SynchType
+    {
+        UPDATE,
+        SELECT
+    }
+    public class SynchObject
+    {
+        private SynchType m_SynchType;
+        private object m_SynchObject;
+        private int m_Key;
+        public SynchObject(object obj, SynchType synchType,int key)
+        {
+            m_SynchObject = obj;
+            m_SynchType = synchType;
+        }
+        public object SynchronizationObject
+        {
+            get { return m_SynchObject; }
+        }
+        public SynchType SynchronizationType
+        {
+            get { return m_SynchType; }
+        }
+        public int Key
+        {
+            get { return m_Key; }
+        }
+    }
+   
+ 
+}

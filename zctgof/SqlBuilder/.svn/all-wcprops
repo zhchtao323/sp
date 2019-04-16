@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/program_c/!svn/ver/6/zctgof/SqlBuilder
+END
+SynchObject.cs
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/program_c/!svn/ver/6/zctgof/SqlBuilder/SynchObject.cs
+END
+ISqlBuilder.cs
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/program_c/!svn/ver/6/zctgof/SqlBuilder/ISqlBuilder.cs
+END
+SqliteDbFactory.cs
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/program_c/!svn/ver/6/zctgof/SqlBuilder/SqliteDbFactory.cs
+END
+dbPropertyInfoManager.cs
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/program_c/!svn/ver/6/zctgof/SqlBuilder/dbPropertyInfoManager.cs
+END
+sample.cs
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/program_c/!svn/ver/6/zctgof/SqlBuilder/sample.cs
+END
+Attribute.cs
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/program_c/!svn/ver/6/zctgof/SqlBuilder/Attribute.cs
+END
+SqlBuilderException.cs
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/program_c/!svn/ver/6/zctgof/SqlBuilder/SqlBuilderException.cs
+END
+IDBFactory.cs
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/program_c/!svn/ver/6/zctgof/SqlBuilder/IDBFactory.cs
+END
+SqlBuilder.cs
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/program_c/!svn/ver/6/zctgof/SqlBuilder/SqlBuilder.cs
+END
+dbPropertyInfo.cs
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/program_c/!svn/ver/6/zctgof/SqlBuilder/dbPropertyInfo.cs
+END

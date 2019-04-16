@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/vs2008/!svn/ver/8/sp/%E8%A7%86%E9%A2%91/VideoSource
+END
+Ptz.cs
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/vs2008/!svn/ver/8/sp/%E8%A7%86%E9%A2%91/VideoSource/Ptz.cs
+END
+IVideoSource.cs
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/vs2008/!svn/ver/8/sp/%E8%A7%86%E9%A2%91/VideoSource/IVideoSource.cs
+END
+ByteArrayUtils.cs
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/vs2008/!svn/ver/8/sp/%E8%A7%86%E9%A2%91/VideoSource/ByteArrayUtils.cs
+END
+MJPEGSource.cs
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/vs2008/!svn/ver/8/sp/%E8%A7%86%E9%A2%91/VideoSource/MJPEGSource.cs
+END
+Events.cs
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/vs2008/!svn/ver/8/sp/%E8%A7%86%E9%A2%91/VideoSource/Events.cs
+END
+JPEGSource.cs
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/vs2008/!svn/ver/8/sp/%E8%A7%86%E9%A2%91/VideoSource/JPEGSource.cs
+END

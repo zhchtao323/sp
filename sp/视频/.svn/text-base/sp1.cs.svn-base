@@ -1,0 +1,376 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Text;
+using System.Windows.Forms;
+using System.Collections;
+using System.Data.Sql;
+using System.Data.OleDb;
+using mjpeg;
+using System.Xml;
+
+
+namespace mjpeg
+{
+    public partial class Sp : Form
+    {    
+        public Sp()
+        {
+            InitializeComponent();
+            TC.yx = true;
+        }
+        private void sp_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                ZCT.Data.MsData m = new ZCT.Data.MsData(conn);
+                string cmd = "select   distinct GROUP_name  from sp";
+                groups = m.FillList(cmd);
+                cmbGroup.DataSource = groups;
+                xx();
+            }
+            catch { }
+        }
+
+        string conn = @"Data Source=169.85.170.18;Initial Catalog=gk;User ID=sj;pwd=sj";// "pwd=sjfc_gks{;user id=gks;Initial Catalog=scgl;Data Source=169.85.170.18";
+        private List<mjpeg.cameraW> ar = new List<cameraW>();//当前视频
+        private List<JT> jtss = new List<JT>();//当前画面的地址
+        private List<string> groups = new List<string>();//     
+        /// <summary>
+        /// 显示
+        /// </summary>
+        private void xx()
+        {
+            ZCT.Data.MsData m = new ZCT.Data.MsData(conn);
+            string cmd = "";
+            if (cmbGroup.Text.Trim() != "")
+            {
+                string str = cmbGroup.Text.Trim();
+                cmd = "select *  from   sp where group_name='"+str+"'";
+                jtss = m.FillCollection<JT>(cmd);
+                if (chkXh.Checked)
+                {
+                    int intr = 4000;
+                    int.TryParse(txtms.Text, out intr);
+                    if (intr == 0)
+                    { intr = 4000; }
+                    timer1.Interval = intr;
+                    timer1.Enabled = true;
+                    cur = 0;
+                    spx_jg();
+                }
+                else
+                {
+                    timer1.Enabled = false;
+                    spxshi();
+                    
+                }
+            }
+        }
+       
+        private void sp_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            TC.yx = false;
+            foreach (mjpeg.cameraW c in ar)
+            {
+                c.mjpegSource.Yx = false;
+                c.Stop();
+                c.Dispose();
+            }
+            ar.Clear();
+            ar = null;
+            GC.Collect();
+        }
+        private int getsm(int ccc)
+        {
+            int sm = 0;
+            if (ccc > 8)
+            { sm = 9; }
+            else
+            {
+                if (ccc > 6)
+                { sm = 8; }
+                else
+                {
+                    if (ccc > 4)
+                    { sm = 6; }
+                    else
+                    {
+                        if (ccc > 2)
+                        { sm = 4; }
+                        else
+                        {
+                            if (ccc > 1)
+                            { sm = 2; }
+                            else
+                            { sm = 1; }
+                        }
+                    }
+                }
+            }
+            return sm;
+        }
+        int cur = 0;
+        public void spx_jg()
+        {
+            try
+            {
+                TC.yx = false;
+
+                //清除现有镜头
+                this.Cursor = Cursors.WaitCursor;
+                foreach (mjpeg.cameraW c in ar)
+                {
+                    c.mjpegSource.Yx = false;
+                    c.Stop();
+                    c.Dispose();
+                }
+                ar.Clear();
+                GC.Collect();
+
+                TC.yx = true;
+                mjpeg.cameraW c2 = new cameraW();
+                c2.Dock = DockStyle.Fill;
+                c2.Source = jtss[cur].url;
+
+                this.Controls.Add(c2);
+                ar.Add(c2);
+                c2.Start();
+
+            }
+            catch (Exception ex)
+            { }
+            finally
+            { this.Cursor = Cursors.Default; }
+            
+        }
+        #region  //xs视频显示
+        public void spxshi()
+        {
+            try
+            {
+                TC.yx = false;
+
+                //清除现有镜头
+                this.Cursor = Cursors.WaitCursor;
+                foreach (mjpeg.cameraW c in ar)
+                {
+                    c.mjpegSource.Yx = false;
+                    c.Stop();
+                    c.Dispose();
+                }
+                ar.Clear();
+                GC.Collect();
+                int sm = getsm(jtss.Count);
+                TC.yx = true;
+                //显示
+                int wei = this.Width;
+                int hei = this.Height - 60;
+                int y0 = 30;
+                int i = 0;
+                foreach (JT jt1 in jtss)
+                {
+                    if (i < sm)
+                    {
+                        mjpeg.cameraW c = new cameraW();
+                        //c.MouseDown += new MouseEventHandler(c_MouseDown);
+                        switch (sm)
+                        {
+                            case 1:
+                                c.Location = new System.Drawing.Point(0, 0 + y0);
+                                c.Dock = System.Windows.Forms.DockStyle.Fill;
+                                break;
+                            case 2:
+                                c.Location = new System.Drawing.Point(i * wei / 2, 0 + y0);
+                                c.Size = new System.Drawing.Size(wei / 2, hei);
+                                break;
+                            case 4:
+                                int[,] wz = new int[,] { { 0, 0 }, { 0, 1 }, { 1, 0 }, { 1, 1 } };
+                                c.Location = new System.Drawing.Point(wz[i, 0] * wei / 2, wz[i, 1] * hei / 2 + y0);
+                                c.Size = new System.Drawing.Size(wei / 2, hei / 2);
+                                break;
+                            case 6:
+                                int[,] wz6 = new int[,] { { 0, 0 }, { 1, 0 }, { 2, 0 }, { 0, 1 }, { 1, 1 }, { 2, 1 } };
+                                c.Location = new System.Drawing.Point(wz6[i, 0] * wei / 3, wz6[i, 1] * hei / 2 + y0);
+                                c.Size = new System.Drawing.Size(wei / 3, hei / 2);
+                                break;
+                            case 8:
+                                int[,] wz8 = new int[,] { { 0, 0 }, { 1, 0 }, { 2, 0 }, { 3, 0 }, { 0, 1 }, { 1, 1 }, { 2, 1 }, { 3, 1 } };
+                                c.Location = new System.Drawing.Point(wz8[i, 0] * wei / 4, wz8[i, 1] * hei / 2 + y0);
+                                c.Size = new System.Drawing.Size(wei / 4, hei / 2);
+                                break;
+                            case 9:
+                                int[,] wz9 = new int[,] { { 0, 0 }, { 1, 0 }, { 2, 0 }, { 0, 1 }, { 1, 1 }, { 2, 1 }, { 0, 2 }, { 1, 2 }, { 2, 2 } };
+                                c.Location = new System.Drawing.Point(wz9[i, 0] * wei / 3, wz9[i, 1] * hei / 3 + y0);
+                                c.Size = new System.Drawing.Size(wei / 3, hei / 3);
+                                break;
+                            default:
+                                break;
+                        }
+
+                        c.Source = jt1.url;
+
+                        this.Controls.Add(c);
+                        ar.Add(c);
+                        c.Start();
+                        i = i + 1;
+                    }
+                }
+            }
+            catch
+            { }
+            finally
+            { this.Cursor = Cursors.Default; }
+        }
+     
+        private cameraW c;  
+        #endregion
+
+
+        #region sp_Resize
+        private void sp_Resize(object sender, EventArgs e)
+        {
+            if (!chkXh.Checked)
+            {
+                int wei = this.Width;
+                int hei = this.Height - 20;
+                int sm = getsm(ar.Count);
+                int i = 0;
+                foreach (cameraW c in ar)
+                {
+                    switch (sm)
+                    {
+                        case 1:
+                            c.Location = new System.Drawing.Point(0, 0);
+                            c.Dock = System.Windows.Forms.DockStyle.Fill;
+                            break;
+                        case 2:
+                            c.Location = new System.Drawing.Point(i * wei / 2, 0);
+                            c.Size = new System.Drawing.Size(wei / 2, hei);
+                            break;
+                        case 4:
+                            int[,] wz = new int[,] { { 0, 0 }, { 0, 1 }, { 1, 0 }, { 1, 1 } };
+                            c.Location = new System.Drawing.Point(wz[i, 0] * wei / 2, wz[i, 1] * hei / 2);
+                            c.Size = new System.Drawing.Size(wei / 2, hei / 2);
+                            break;
+                        case 6:
+                            int[,] wz6 = new int[,] { { 0, 0 }, { 1, 0 }, { 2, 0 }, { 0, 1 }, { 1, 1 }, { 2, 1 } };
+                            c.Location = new System.Drawing.Point(wz6[i, 0] * wei / 3, wz6[i, 1] * hei / 2);
+                            c.Size = new System.Drawing.Size(wei / 3, hei / 2);
+                            break;
+                        case 8:
+                            int[,] wz8 = new int[,] { { 0, 0 }, { 1, 0 }, { 2, 0 }, { 3, 0 }, { 0, 1 }, { 1, 1 }, { 2, 1 }, { 3, 1 } };
+                            c.Location = new System.Drawing.Point(wz8[i, 0] * wei / 4, wz8[i, 1] * hei / 2);
+                            c.Size = new System.Drawing.Size(wei / 4, hei / 2);
+                            break;
+                        case 9:
+                            int[,] wz9 = new int[,] { { 0, 0 }, { 1, 0 }, { 2, 0 }, { 0, 1 }, { 1, 1 }, { 2, 1 }, { 0, 2 }, { 1, 2 }, { 2, 2 } };
+                            c.Location = new System.Drawing.Point(wz9[i, 0] * wei / 3, wz9[i, 1] * hei / 3);
+                            c.Size = new System.Drawing.Size(wei / 3, hei / 3);
+                            break;
+                        default:
+                            break;
+                    }
+                    i = i + 1;
+                }
+            }
+        }
+        #endregion
+
+
+        /// <summary>
+        /// 窗体顶层控制
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void 顶层ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.TopMost = true;
+        }
+
+        private void 底层ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.TopMost = false;
+        }
+
+        //根据group 获取摄像头 private string filename = @"c:\spgroup.xml";
+        private void cmbGroup_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            xx();
+        }
+
+        /// <summary>
+        /// 循环显示
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void chkXh_CheckStateChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnconfig_Click(object sender, EventArgs e)
+        {
+            sp.frmConfig f = new sp.frmConfig();
+            f.ShowDialog();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                if (cur >= jtss.Count)
+                { cur = 0; }
+
+                TC.yx = false;
+                //清除现有镜头
+                this.Cursor = Cursors.WaitCursor;
+                foreach (mjpeg.cameraW c in ar)
+                {
+                    c.mjpegSource.Yx = false;
+                    c.Stop();
+                    c.Dispose();
+                }
+                ar.Clear();
+                GC.Collect();
+
+                TC.yx = true;
+                mjpeg.cameraW c2 = new cameraW();
+                c2.Dock = DockStyle.Fill;
+                c2.Source = jtss[cur].url;
+
+                this.Controls.Add(c2);
+                ar.Add(c2);
+                c2.Start();
+
+               
+                //mjpeg.cameraW c2 = ar[0];
+                //c2.Stop();
+                //c2.Source = jtss[cur].url;
+                //c2.Start();
+                cur = cur + 1;                
+            }
+            catch
+            { }
+            finally
+            { this.Cursor = Cursors.Default; }
+        }
+
+        private void chkXh_CheckedChanged(object sender, EventArgs e)
+        {
+            xx();
+        }
+
+        private void tcom_Click(object sender, EventArgs e)
+        {
+
+        }     
+    }
+}

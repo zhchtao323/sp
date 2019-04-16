@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/program_c/!svn/ver/6/zctgof/Pattern
+END
+IComposite.cs
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/program_c/!svn/ver/6/zctgof/Pattern/IComposite.cs
+END
+IVisitable.cs
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/program_c/!svn/ver/6/zctgof/Pattern/IVisitable.cs
+END
+GObserver.cs
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/program_c/!svn/ver/6/zctgof/Pattern/GObserver.cs
+END
+IGCommand.cs
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/program_c/!svn/ver/6/zctgof/Pattern/IGCommand.cs
+END
+factor.cs
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/program_c/!svn/ver/6/zctgof/Pattern/factor.cs
+END
+DBGeneric.cs
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/program_c/!svn/ver/6/zctgof/Pattern/DBGeneric.cs
+END
+Singleton.cs
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/program_c/!svn/ver/6/zctgof/Pattern/Singleton.cs
+END
+Observe.cs
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/program_c/!svn/ver/6/zctgof/Pattern/Observe.cs
+END
+Prototype.cs
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/program_c/!svn/ver/6/zctgof/Pattern/Prototype.cs
+END
+GSubject.cs
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/program_c/!svn/ver/6/zctgof/Pattern/GSubject.cs
+END
+GFlyweight.cs
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/program_c/!svn/ver/6/zctgof/Pattern/GFlyweight.cs
+END
+Reflection.cs
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/program_c/!svn/ver/6/zctgof/Pattern/Reflection.cs
+END

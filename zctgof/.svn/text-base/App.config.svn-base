@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <appSettings>
+    <!--   User application and configured property settings go here.-->
+    <add key="local_conn" value="Provider=Microsoft.Jet.OLEDB.4.0;Data Source=opc.mdb"></add>
+    <add key="local_lx" value="ole"></add>
+    <!--Data Source=opc.sqllite  sqllite  .-->
+    <!--Data Source=Data Source=169.85.170.18;Initial Catalog=LZK;User ID=lzk;pwd=lzk2009~  sql .-->
+    <!--  mysql .-->
+    <add key="server_conn" value="Provider=Microsoft.Jet.OLEDB.4.0;Data Source=opc.mdb"></add>
+    <add key="server_lx" value="ole"></add>
+  </appSettings>  
+</configuration>

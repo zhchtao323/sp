@@ -1,0 +1,178 @@
+﻿namespace mjpeg
+{
+	partial class Sp
+	{
+		/// <summary>
+		/// Required designer variable.
+		/// </summary>
+		private System.ComponentModel.IContainer components = null;
+
+		/// <summary>
+		/// Clean up any resources being used.
+		/// </summary>
+		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing && (components != null))
+			{
+				components.Dispose();
+			}
+			base.Dispose(disposing);
+			
+		}
+
+		#region Windows Form Designer generated code
+
+		/// <summary>
+		/// Required method for Designer support - do not modify
+		/// the contents of this method with the code editor.
+		/// </summary>
+		private void InitializeComponent()
+		{
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Sp));
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.tcom = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.顶层ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.底层ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmbGroup = new System.Windows.Forms.ComboBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.chkXh = new System.Windows.Forms.CheckBox();
+            this.btnconfig = new System.Windows.Forms.Button();
+            this.txtms = new System.Windows.Forms.TextBox();
+            this.menuStrip1.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tcom,
+            this.toolStripMenuItem1});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(627, 24);
+            this.menuStrip1.TabIndex = 0;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // tcom
+            // 
+            this.tcom.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "4",
+            "6",
+            "8",
+            "9"});
+            this.tcom.Name = "tcom";
+            this.tcom.Size = new System.Drawing.Size(121, 20);
+            this.tcom.Text = "1";
+            this.tcom.Visible = false;
+            this.tcom.Click += new System.EventHandler(this.tcom_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.顶层ToolStripMenuItem,
+            this.底层ToolStripMenuItem});
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(29, 20);
+            this.toolStripMenuItem1.Text = "层";
+            // 
+            // 顶层ToolStripMenuItem
+            // 
+            this.顶层ToolStripMenuItem.Name = "顶层ToolStripMenuItem";
+            this.顶层ToolStripMenuItem.Size = new System.Drawing.Size(94, 22);
+            this.顶层ToolStripMenuItem.Text = "顶层";
+            this.顶层ToolStripMenuItem.Click += new System.EventHandler(this.顶层ToolStripMenuItem_Click);
+            // 
+            // 底层ToolStripMenuItem
+            // 
+            this.底层ToolStripMenuItem.Name = "底层ToolStripMenuItem";
+            this.底层ToolStripMenuItem.Size = new System.Drawing.Size(94, 22);
+            this.底层ToolStripMenuItem.Text = "底层";
+            this.底层ToolStripMenuItem.Click += new System.EventHandler(this.底层ToolStripMenuItem_Click);
+            // 
+            // cmbGroup
+            // 
+            this.cmbGroup.FormattingEnabled = true;
+            this.cmbGroup.Location = new System.Drawing.Point(152, 3);
+            this.cmbGroup.Name = "cmbGroup";
+            this.cmbGroup.Size = new System.Drawing.Size(113, 20);
+            this.cmbGroup.TabIndex = 9;
+            this.cmbGroup.SelectedIndexChanged += new System.EventHandler(this.cmbGroup_SelectedIndexChanged);
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 4000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // chkXh
+            // 
+            this.chkXh.AutoSize = true;
+            this.chkXh.Location = new System.Drawing.Point(271, 3);
+            this.chkXh.Name = "chkXh";
+            this.chkXh.Size = new System.Drawing.Size(108, 16);
+            this.chkXh.TabIndex = 11;
+            this.chkXh.Text = "单画面循环显示";
+            this.chkXh.UseVisualStyleBackColor = true;
+            this.chkXh.CheckStateChanged += new System.EventHandler(this.chkXh_CheckStateChanged);
+            this.chkXh.CheckedChanged += new System.EventHandler(this.chkXh_CheckedChanged);
+            // 
+            // btnconfig
+            // 
+            this.btnconfig.Location = new System.Drawing.Point(447, 1);
+            this.btnconfig.Name = "btnconfig";
+            this.btnconfig.Size = new System.Drawing.Size(56, 20);
+            this.btnconfig.TabIndex = 12;
+            this.btnconfig.Text = "配置";
+            this.btnconfig.UseVisualStyleBackColor = true;
+            this.btnconfig.Click += new System.EventHandler(this.btnconfig_Click);
+            // 
+            // txtms
+            // 
+            this.txtms.Location = new System.Drawing.Point(385, 1);
+            this.txtms.Name = "txtms";
+            this.txtms.Size = new System.Drawing.Size(56, 21);
+            this.txtms.TabIndex = 13;
+            this.txtms.Text = "4000";
+            // 
+            // Sp
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(627, 388);
+            this.Controls.Add(this.txtms);
+            this.Controls.Add(this.btnconfig);
+            this.Controls.Add(this.chkXh);
+            this.Controls.Add(this.cmbGroup);
+            this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this.menuStrip1;
+            this.Name = "Sp";
+            this.Text = "视频(双击图象、点开始录象、可以实现录象)";
+            this.TopMost = true;
+            this.Load += new System.EventHandler(this.sp_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.sp_FormClosing);
+            this.Resize += new System.EventHandler(this.sp_Resize);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+		}
+
+		#endregion
+
+		private System.Windows.Forms.MenuStrip menuStrip1;
+		private System.Windows.Forms.ToolStripComboBox tcom;
+		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem 顶层ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 底层ToolStripMenuItem;
+        private System.Windows.Forms.ComboBox cmbGroup;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.CheckBox chkXh;
+        private System.Windows.Forms.Button btnconfig;
+        private System.Windows.Forms.TextBox txtms;
+	}
+}

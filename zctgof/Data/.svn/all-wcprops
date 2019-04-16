@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/program_c/!svn/ver/6/zctgof/Data
+END
+SqliteData.cs
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/program_c/!svn/ver/6/zctgof/Data/SqliteData.cs
+END
+TableAttribute.cs
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/program_c/!svn/ver/6/zctgof/Data/TableAttribute.cs
+END
+Conn.cs
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/program_c/!svn/ver/6/zctgof/Data/Conn.cs
+END
+MySQlData.cs
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/program_c/!svn/ver/6/zctgof/Data/MySQlData.cs
+END
+OleDbData.cs
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/program_c/!svn/ver/6/zctgof/Data/OleDbData.cs
+END
+SQLHelper.cs
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/program_c/!svn/ver/6/zctgof/Data/SQLHelper.cs
+END
+ColumnAttribute.cs
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/program_c/!svn/ver/6/zctgof/Data/ColumnAttribute.cs
+END
+IData.cs
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/program_c/!svn/ver/6/zctgof/Data/IData.cs
+END
+ProviderConfiguration.cs
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/program_c/!svn/ver/6/zctgof/Data/ProviderConfiguration.cs
+END
+TableList.cs
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/program_c/!svn/ver/6/zctgof/Data/TableList.cs
+END
+ds_computer.cs
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/program_c/!svn/ver/6/zctgof/Data/ds_computer.cs
+END
+MsSqlData_old.cs
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/program_c/!svn/ver/6/zctgof/Data/MsSqlData_old.cs
+END
+MsData.cs
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/program_c/!svn/ver/5/zctgof/Data/MsData.cs
+END

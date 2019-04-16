@@ -1,0 +1,86 @@
+using System;
+using System.Collections.Generic;
+using System.Collections;
+using System.Text;
+using System.IO;
+using System.Data.SQLite;
+using System.Data;
+using System.Reflection;
+using System.Timers;
+using System.Data.OleDb;
+using System.Xml;
+
+namespace ZCT.Data.SqlBuilder
+{
+    /// <summary>
+    /// Wrapper for PropertyInfo array with some additional db capabilities
+    /// </summary>
+    public class dbPropertyInfoManager : IEnumerable
+    {
+        private Dictionary<string, dbPropertyInfo> m_dbProperties;
+        private dbTable m_dbTableAttr;
+        IDBFactory m_dbFactory;
+        static private dbPropertyInfoManager instance;
+        static public dbPropertyInfoManager Instance
+        {
+            get
+            {
+                if (instance == null) instance = new dbPropertyInfoManager();
+                return instance;
+            }
+        }
+        public void setDbFactory(IDBFactory db_factory)
+        {
+            m_dbFactory = db_factory;
+        }
+        public void setObject(object o)
+        {
+            m_dbTableAttr = null;
+
+            object[] attrs = o.GetType().GetCustomAttributes(typeof(dbTable), false);
+
+            if (attrs.Length == 0)
+                throw new ApplicationException("Object doesn't implement dbTable attribute");
+
+            m_dbTableAttr = (dbTable)attrs[0];
+
+            m_dbProperties = new Dictionary<string, dbPropertyInfo>();
+            foreach (PropertyInfo p in o.GetType().GetProperties())
+            {
+                dbPropertyInfo pi = new dbPropertyInfo(p, o, m_dbFactory);
+
+                if (pi.isDbProperty)
+                    m_dbProperties.Add(pi.fieldName, pi);
+            }
+
+        }
+        private dbPropertyInfoManager()
+        {
+        }
+        public dbPropertyInfo getdbPropertyInfo(string field_name)
+        {
+            return m_dbProperties[field_name];
+        }
+        public string tableName
+        {
+            get { return m_dbTableAttr.tableName; }
+        }
+        public bool isDbObject
+        {
+            get { return m_dbTableAttr != null; }
+        }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return m_dbProperties.Values.GetEnumerator();
+        }
+        public void setValue(string fieldName, object value)
+        {
+            dbPropertyInfo p = m_dbProperties[fieldName];
+            p.setValue(value);
+        }
+
+
+    }
+ 
+
+}

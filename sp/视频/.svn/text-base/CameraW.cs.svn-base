@@ -1,0 +1,441 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Diagnostics;
+using System.Data;
+using System.Text;
+using System.Windows.Forms;
+using System.Net.NetworkInformation;
+using videosource;
+using motion;
+namespace mjpeg
+{
+    public enum LxWay { Motion4Inter, TimeInter, Motion4 ,Always};
+    /// <summary>
+    /// 对外提供视频源、名称、启动、停止、录像、录像方式
+    /// </summary>
+	public partial class cameraW : UserControl
+	{
+        private  Graphics g;//= this.CreateGraphics();
+        private Rectangle rc;// = this.ClientRectangle;
+        private bool onlyVide = false;
+
+        public bool OnlyVide
+        {
+            get { return onlyVide; }
+            set { onlyVide = value; }
+        }
+		public cameraW()
+		{
+			InitializeComponent();
+            g = this.CreateGraphics();
+            rc = this.ClientRectangle;
+            source = @"http://169.85.100.210:80/axis-cgi/mjpg/video.cgi?camera=1";                       
+            this.Resize += new EventHandler(cameraW_Resize);
+            this.MouseDoubleClick += new MouseEventHandler(cameraW_MouseDoubleClick);
+		}
+        /// <summary>
+        /// 网络通判断
+        /// </summary>
+        /// <param name="ip"></param>
+        /// <returns></returns>
+        private Boolean IsExistC(string ip)
+        {
+            Ping p = new Ping();
+            PingReply r = p.Send(ip, 1000);// 200
+            if (r.Status == IPStatus.Success)
+            {  return true;  }
+            else
+            { return false; }
+        }
+        
+
+        void cameraW_Resize(object sender, EventArgs e)
+        {
+            g.Dispose();
+            g = this.CreateGraphics();
+            rc = this.ClientRectangle;
+            rc = new Rectangle(rc.X + 1, rc.Y + 1, rc.Width - 2, rc.Height - 2);
+            g.Clear(Color.Green);
+            g.DrawString(name, new Font("宋体", 12), Brushes.Orange, new PointF(0, rc.Height/2));
+        }
+		public  MJPEGSource mjpegSource;
+		private string source = "";
+        /// <summary>
+        /// 视屏源
+        /// </summary>
+		public string Source
+		{
+			get { return source; }
+			set { source = value; }
+		}
+        private string name = "";
+        /// <summary>
+        /// 视屏名称
+        /// </summary>
+        public string Name1
+        {
+            get { return name; }
+            set { name = value; }
+        }
+        /// <summary>
+        /// 启动视屏，仅通过此方式启动，默认状态视屏不运行
+        /// </summary>
+		public void Start()
+		{
+            mjpegSource = null;
+            mjpegSource = new MJPEGSource();
+            mjpegSource.Login = "sjfc";
+            mjpegSource.Password = "sjfc";
+            mjpegSource.NewFrame += new CameraEventHandler(mjpegSource_NewFrame);
+            mjpegSource.VideoSource = source;
+            mjpegSource.Start();          
+		}
+        /// <summary>
+        /// 停止通讯
+        /// </summary>
+		public void Stop()
+		{
+            try
+            {
+                if (aw != null)
+                {
+                    aw.Close();
+                }
+
+                mjpegSource.NewFrame -= new CameraEventHandler(mjpegSource_NewFrame);
+                mjpegSource.Yx = false;
+                mjpegSource.Stop();
+                mjpegSource = null;
+                motionDetecotor = null;
+                GC.Collect();
+            }
+            catch { }
+		}
+        private int width=704;//图像的宽度
+        private int height=576;
+        private int cs = 0;
+
+        private delegate void drawbmp(Image e);
+        private void drawbmp1(Image e)
+        {
+            width = e.Width;
+            height = e.Height;
+            if (!(video && onlyVide))//录像，显示
+            {
+               g.DrawImage(e, rc);
+               // this.Invoke(
+               //this.Invoke(new Action<delegate(){g.DrawImage(e, rc);})>());
+            }
+        }
+        /// <summary>
+        /// 视频新帧到处理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void mjpegSource_NewFrame(object sender, Image e)
+        {
+            this.Invoke(new drawbmp(drawbmp1), e);
+            ////width = e.Width;
+            ////height = e.Height;
+            ////if (!(video && onlyVide))//录像，显示
+            ////{
+            ////   // g.DrawImage(e, rc);
+            ////   // this.Invoke(
+            ////   //this.Invoke(new Action<delegate(){g.DrawImage(e, rc);})>());
+            ////}
+            cs = cs + 1;
+            if (cs > 65536)
+            { cs = 0; }
+            VideoLx(e);  //录像                     
+        }
+        private int cs1 = 0;//次数
+       /// <summary>
+       /// 显示错误信息
+       /// </summary>
+       /// <param name="sender"></param>
+       /// <param name="e"></param>
+        private void tmErr_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                if (System.Math.Abs(cs - cs1) < 3)
+                {
+                    g.Dispose();
+                    g = this.CreateGraphics();
+                    rc = this.ClientRectangle;
+                    rc = new Rectangle(rc.X + 1, rc.Y + 1, rc.Width - 2, rc.Height - 2);
+                    g.Clear(Color.Green);
+                    g.DrawString(name + mjpegSource.Err, new Font("宋体", 12), Brushes.Orange, new PointF(0, rc.Height / 2));
+                    this.Stop();
+                    this.Start();
+
+                }
+                cs1 = cs;
+            }
+            catch { }
+        }		
+		private void w_Load(object sender, EventArgs e)
+		{   
+           
+		}
+
+        /// <summary>
+        /// 显示录像菜单
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cameraW_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            cms1.Left = e.X;
+            cms1.Top = e.Y;
+            cms1.TopLevel = true;
+            cms1.Show();
+        }
+        /// <summary>
+        /// //录像
+        /// </summary>
+        private Tiger.Video.VFW.AVIWriter aw;
+        private string directory = "";
+        private int fcc = 0;
+        private Boolean video = false;
+        private MotionDetector4 motionDetecotor;
+        private void AviInit()
+        {
+            //获取保存文件名
+            SaveFileDialog sav = new SaveFileDialog();
+            sav.Filter = "视频文件 (*.avi)|*.*";
+            string  str = @"E:\sp\sp";
+            if (sav.ShowDialog() == DialogResult.OK)
+            {
+                str = sav.FileName;
+                if (name != "")
+                {
+                    int j = str.LastIndexOf(@"\");
+                    directory = str.Substring(0,  j) + @"\sp";
+                    str = directory + name + "-" + System.DateTime.Now.ToString("yyMMdd-HHmm");
+                }
+            }
+            else
+            {
+                directory = @"E:\sp\sp";
+                str = directory + name + "-" + System.DateTime.Now.ToString("yyMMdd-HHmm");
+            }
+            str = str + ".avi";
+            //视频写初始化
+            aw = new Tiger.Video.VFW.AVIWriter();
+            aw.FrameRate = 10;
+            aw.Codec = "divx"; //"DiVx Codec 4.12";//Micro            
+            //aw.Open(str, 704, 576);
+            aw.Open(str, width, height);
+            fcc = aw.Fcc;
+        }        
+       
+        public Boolean Video  //录像
+        {
+            get { return video; }
+            set 
+            {
+                motionDetecotor = new motion.MotionDetector4();
+                video = value;
+                if (video)
+                {  AviInit(); }
+                else
+                {
+                    if (aw != null)
+                    {   aw.Close(); }
+                }
+            }
+        }
+        private LxWay way = LxWay.Motion4Inter;
+
+        public LxWay Way
+        {
+            get { return way; }
+            set
+            { 
+                way = value;
+                switch (way)
+                {
+                    case LxWay.Motion4Inter: 
+                    case LxWay.Motion4:
+                        motionDetecotor = new MotionDetector4();
+                        break;
+                }
+            }
+        }
+
+        private DateTime dt = System.DateTime.Now; //时间
+        private int interTime = 1000;//时间间隔
+        private Boolean motionStstus = true ; //运动状态
+        Bitmap bmp;//=new Bitmap(width, height);
+        /// <summary>
+        /// 录像处理
+        /// </summary>
+        /// <param name="bmp1"></param>
+        private void VideoLx(Image bmp1)
+        {
+            try
+            {          
+                if (video)
+                {
+                    
+                    lock (bmp1)
+                    {
+                         bmp = (Bitmap)bmp1.Clone();
+                    }
+                    DateTime dt1;
+                    TimeSpan sp;
+                    Graphics g;
+                    switch(way)
+                    {
+                        case LxWay.Motion4Inter:  //间隔时间检测运动，运动则记录
+                             dt1 = System.DateTime.Now;
+                             sp = dt1.Subtract(dt);
+                            if (sp.TotalMilliseconds >= interTime)
+                            {
+                                if (motionDetecotor != null)
+                                {
+                                    if (motionDetecotor.ProcessFrame1(bmp))
+                                    {
+                                        aw.AddFrame(bmp);
+                                        motionStstus = true;
+                                    }
+                                }
+                                dt = dt1;                               
+                            } 
+                            else
+                            {
+                                motionStstus = false;
+                            }
+                            //运动则记录
+                            if (motionStstus)
+                            {
+                                aw.AddFrame(bmp); 
+                                //g = Graphics.FromImage(bmp);
+                                //g.DrawString("录像中", new Font("宋体", 60), Brushes.Red, new PointF(20, 150));
+                            }
+                            break;
+                        case LxWay.Motion4:
+                            if (motionDetecotor != null)                            
+                            {
+                              if (motionDetecotor.ProcessFrame1(bmp))
+                              {
+                                  aw.AddFrame(bmp);
+                                 // g = Graphics.FromImage(bmp);
+                                 // g.DrawString("录像中", new Font("宋体", 60), Brushes.Red, new PointF(20, 150));                          
+                              }
+                            }
+                            break;
+                        case LxWay.TimeInter:
+                            dt1 = System.DateTime.Now;
+                            sp = dt1.Subtract(dt);
+                            if (Math.Abs( sp.TotalMilliseconds) >=interTime)
+                            { 
+                               aw.AddFrame(bmp);
+                               //g = Graphics.FromImage(bmp);
+                              // g.DrawString("录像中", new Font("宋体", 60), Brushes.Red, new PointF(20, 150));
+                               dt = dt1;
+                            }                           
+                            break;
+                        case LxWay.Always:                          
+                            aw.AddFrame(bmp);
+                           // g = Graphics.FromImage(bmp);
+                           // g.DrawString("录像中", new Font("宋体", 60), Brushes.Red, new PointF(20, 150));                          
+                            break;
+                    }
+                }
+            }
+            catch   {    }
+        }
+       
+       
+
+        private void 选择ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+        string strsj = DateTime.Today.ToString();//DateTime.Now.ToString("yyMMdd-HH");//= 
+        /// <summary>
+        /// 每天一个文件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timer1_Tick(object sender, EventArgs e)       
+        {
+            if (video)//录像
+            {
+                string strsj1 = DateTime.Today.ToString();
+                if (strsj1 != strsj)
+                {
+                    strsj = strsj1;
+                    string str = directory + name + "-" + System.DateTime.Now.ToString("yyMMdd-HHmm");
+                    str = str + ".avi";
+                    aw.Close();                   
+                    //aw.Open2(str, 704, 576);
+                    aw.Open2(str, width, height);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 是否录像控制
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void kslx_Click(object sender, EventArgs e)
+        {
+            Video = true;
+        }
+
+        private void tzlx_Click(object sender, EventArgs e)
+        {
+            Video = false;
+        }
+        /// <summary>
+        /// 录像方式控制
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void 录像方式实时ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Way = LxWay.Always;
+        }
+        private void 录像方式运动检测ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Way = LxWay.Motion4Inter;
+        }
+        private void 录像方式1秒1桢ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Way = LxWay.TimeInter;
+        }
+        /// <summary>
+        /// 转到浏览器显示和控制
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void 浏览器控制ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+            int j = source.IndexOf(@"/axis");
+            if (j > 0)
+            {
+                string str = source.Substring(0, j);
+                Process.Start(str);
+            }
+        }
+
+        private void 不显示ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            onlyVide = true;
+        }
+
+        private void 显示ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            onlyVide = false;
+        }
+
+       
+	}
+}

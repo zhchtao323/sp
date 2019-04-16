@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1339FD90-D196-423C-AEBC-605CADC730A5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ZCT</RootNamespace>
+    <AssemblyName>ZCT</AssemblyName>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <StartupObject>
+    </StartupObject>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>sp.pfx</AssemblyOriginatorKeyFile>
+    <SccProjectName>Svn</SccProjectName>
+    <SccLocalPath>Svn</SccLocalPath>
+    <SccAuxPath>Svn</SccAuxPath>
+    <SccProvider>SubversionScc</SccProvider>
+    <ApplicationIcon>水晶软件桌面图标下载4.ico</ApplicationIcon>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="compress\Compressor.cs" />
+    <Compile Include="Data\ColumnAttribute.cs" />
+    <Compile Include="Data\Conn.cs" />
+    <Compile Include="Data\IData.cs" />
+    <Compile Include="Data\MsData.cs" />
+    <Compile Include="Data\SqliteData.cs" />
+    <Compile Include="DecimalBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Kelvin.cs" />
+    <Compile Include="report_excel\cell\Cell.cs" />
+    <Compile Include="report_excel\cell\ContentType.cs" />
+    <Compile Include="report_excel\cell\DisplayFormatType.cs" />
+    <Compile Include="report_excel\cell\Row.cs" />
+    <Compile Include="report_excel\cell\XMLStyle.cs" />
+    <Compile Include="Serialization.cs" />
+    <Compile Include="SQl\GenerateSql.cs" />
+    <Compile Include="report_excel\dg.cs" />
+    <Compile Include="Data\MsSqlData_old.cs" />
+    <Compile Include="Data\ProviderConfiguration.cs" />
+    <Compile Include="Data\TableAttribute.cs" />
+    <Compile Include="Data\OleDbData.cs" />
+    <Compile Include="Data\ds_computer.cs" />
+    <Compile Include="frmDl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDl.Designer.cs">
+      <DependentUpon>frmDl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pattern\GFlyweight.cs" />
+    <Compile Include="Pattern\GObserver.cs" />
+    <Compile Include="Pattern\GSubject.cs" />
+    <Compile Include="Pattern\IComposite.cs" />
+    <Compile Include="Pattern\IGCommand.cs" />
+    <Compile Include="Pattern\IVisitable.cs" />
+    <Compile Include="Pattern\Prototype.cs" />
+    <Compile Include="Pattern\Reflection.cs" />
+    <Compile Include="Data\SQLHelper.cs" />
+    <Compile Include="Pattern\DBGeneric.cs" />
+    <Compile Include="Pattern\factor.cs" />
+    <Compile Include="Pattern\Observe.cs" />
+    <Compile Include="Pattern\Singleton.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmDl.resx">
+      <DependentUpon>frmDl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="App.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Data\TableList.cs" />
+    <Compile Include="report_excel\report.cs" />
+    <Compile Include="report_excel\expnew.cs" />
+    <Compile Include="report_excel\report_row.cs" />
+    <Compile Include="SqlBuilder\SynchObject.cs" />
+    <Compile Include="SqlBuilder\ISqlBuilder.cs" />
+    <Compile Include="SqlBuilder\SqlBuilderException.cs" />
+    <Compile Include="SqlBuilder\SqlBuilder.cs" />
+    <Compile Include="SqlBuilder\dbPropertyInfo.cs" />
+    <Compile Include="SqlBuilder\dbPropertyInfoManager.cs" />
+    <Compile Include="SqlBuilder\SqliteDbFactory.cs" />
+    <Compile Include="SqlBuilder\IDBFactory.cs" />
+    <Compile Include="SqlBuilder\Attribute.cs" />
+    <Compile Include="SqlBuilder\sample.cs" />
+    <Compile Include="TranReceive.cs" />
+    <Compile Include="TranSend.cs" />
+    <Compile Include="user.cs" />
+    <Compile Include="DACxuser.cs" />
+    <None Include="sp.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="水晶软件桌面图标下载4.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

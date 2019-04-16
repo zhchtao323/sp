@@ -1,0 +1,75 @@
+//using System;
+//using System.Collections.Generic;
+//using System.Collections;
+//using System.Text;
+//using System.IO;
+////using System.Data.SQLite;
+//using System.Data;
+//using System.Reflection;
+//using System.Timers;
+//using System.Data.OleDb;
+//using System.Xml;
+
+//namespace ZCT.Data.SqlBuilder
+//{
+//    public class SqliteDbFactory : IDBFactory
+//    {
+//        IDbConnection m_Connection;
+//        #region IDBFactory Members
+//        IDbConnection IDBFactory.CreateConnection(string connection_string)
+//        {
+//            m_Connection = new SQLiteConnection(connection_string);
+//            return m_Connection;
+//        }
+//        IDbDataAdapter IDBFactory.CreateAdaptor(string query)
+//        {
+//            SQLiteDataAdapter a = new SQLiteDataAdapter(query, (SQLiteConnection)m_Connection);
+//            return a;
+//        }
+//        string IDBFactory.NetTypeToDBType(string netType)
+//        {
+//            switch (netType)
+//            {
+//                case "string":
+//                    return "text";
+//                case "double":
+//                case "float":
+//                case "single":
+//                    return "float";
+//                case "int16":
+//                case "int32":
+//                case "int64":
+//                case "uint16":
+//                case "uint32":
+//                case "uint64":
+//                case "boolean":
+//                case "byte":
+//                    return "integer";
+//                case "datetime":
+//                    return "datetime";
+//                default:
+//                    return "integer";
+//            }
+//        }
+//        bool IDBFactory.IsTableExist(string data)
+//        {
+//            using (IDbCommand cmd = m_Connection.CreateCommand())
+//            {
+//                cmd.CommandText = data;
+//                using (IDataReader reader = cmd.ExecuteReader())
+//                {
+//                    if (reader.Read())
+//                    {
+//                        return reader.GetInt32(0) > 0;
+//                    }
+//                    reader.Close();
+//                }
+//            }
+
+//            throw new DataException("It shouldn't be here");
+//        }
+//        #endregion
+//    }
+   
+
+//}
