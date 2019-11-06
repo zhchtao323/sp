@@ -26,7 +26,7 @@ namespace spMain
             //using Ionic.Zip;
             var currentAssembly = Assembly.GetEntryAssembly();
             var currentDirectory = new FileInfo(currentAssembly.Location).DirectoryName;
-            string p1 = currentDirectory + @"ibvlc1";
+            string p1 = currentDirectory + @"\libvlc";
             if (!System.IO.Directory.Exists(p1))
             {
                 jy();
