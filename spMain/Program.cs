@@ -29,7 +29,8 @@ namespace spMain
             string p1 = currentDirectory + @"ibvlc1";
             if (!System.IO.Directory.Exists(p1))
             {
-                Task t1 = Task.Factory.StartNew(jy);
+                jy();
+                //Task t1 = Task.Factory.StartNew(jy);
             }
 
 
